@@ -1,24 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="id">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
-
-    <title><%= htmlWebpackPlugin.options.title %> | Story App</title>
+    <title>StoryApp</title>
   </head>
-  <body>
+  <body class="d-flex flex-column min-vh-100 pt-5 mt-4">
     <header>
-      <!-- Your header and navbar -->
+      <nav-bar></nav-bar>
     </header>
-
-    <main>
-      <!-- Your story content -->
-    </main>
-
-    <footer>
-      <!-- Your footer -->
-    </footer>
+    <main class="container py-4 flex-grow-1" id="mainContent"></main>
+    <footer-app></footer-app>
   </body>
 </html>
