@@ -1,6 +1,13 @@
 import { LitElement, html } from "lit";
+import { msg, updateWhenLocaleChanges } from "@lit/localize";
+import { getLocale, changeLocale } from "../localization.js";
 
 class NavBar extends LitElement {
+  constructor() {
+    super();
+    updateWhenLocaleChanges(this);
+  }
+
   createRenderRoot() {
     return this;
   }
@@ -15,40 +22,31 @@ class NavBar extends LitElement {
             type="button"
             data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasNavbar"
-            aria-controls="offcanvasNavbar"
           >
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div
-            class="offcanvas offcanvas-end"
-            tabindex="-1"
-            id="offcanvasNavbar"
-            aria-labelledby="offcanvasNavbarLabel"
-          >
+          <div class="offcanvas offcanvas-end" id="offcanvasNavbar">
             <div class="offcanvas-header border-bottom">
-              <h5
-                class="offcanvas-title fw-bold text-primary"
-                id="offcanvasNavbarLabel"
-              >
-                Menu
-              </h5>
+              <h5 class="offcanvas-title fw-bold text-primary">Menu</h5>
               <button
                 type="button"
                 class="btn-close"
                 data-bs-dismiss="offcanvas"
-                aria-label="Close"
               ></button>
             </div>
             <div class="offcanvas-body">
-              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+              <ul
+                class="navbar-nav justify-content-end flex-grow-1 pe-3 align-items-center"
+              >
                 <li class="nav-item">
                   <a
                     class="nav-link active"
                     href="#"
                     id="nav-dashboard"
                     data-bs-dismiss="offcanvas"
-                    >Dashboard</a
                   >
+                    ${msg("Beranda", { id: "msg-dashboard" })}
+                  </a>
                 </li>
                 <li class="nav-item">
                   <a
@@ -56,8 +54,9 @@ class NavBar extends LitElement {
                     href="#"
                     id="nav-add-story"
                     data-bs-dismiss="offcanvas"
-                    >Tambah Story</a
                   >
+                    ${msg("Tambah Cerita", { id: "msg-add-story" })}
+                  </a>
                 </li>
                 <li class="nav-item">
                   <a
@@ -65,8 +64,37 @@ class NavBar extends LitElement {
                     href="#"
                     id="nav-profile"
                     data-bs-dismiss="offcanvas"
-                    >Profil Developer</a
                   >
+                    ${msg("Profil", { id: "msg-profile" })}
+                  </a>
+                </li>
+                <li class="nav-item dropdown ms-md-3 mt-3 mt-md-0">
+                  <button
+                    class="btn btn-outline-primary btn-sm dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                  >
+                    ${msg("Bahasa", { id: "msg-language" })}
+                    (${getLocale().toUpperCase()})
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <button
+                        class="dropdown-item"
+                        @click=${() => changeLocale("id")}
+                      >
+                        ID (Indonesia)
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        class="dropdown-item"
+                        @click=${() => changeLocale("en")}
+                      >
+                        EN (English)
+                      </button>
+                    </li>
+                  </ul>
                 </li>
               </ul>
             </div>
@@ -76,5 +104,4 @@ class NavBar extends LitElement {
     `;
   }
 }
-
 customElements.define("nav-bar", NavBar);

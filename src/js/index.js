@@ -1,5 +1,7 @@
 import "../sass/main.scss";
 import * as bootstrap from "bootstrap";
+import { setLocale } from "./localization.js";
+import { msg } from "@lit/localize";
 import "./components/nav-bar.js";
 import "./components/story-list.js";
 import "./components/add-story.js";
@@ -8,7 +10,9 @@ import "./components/loading-indicator.js";
 import "./components/dev-profile.js";
 import { formatDate } from "./utils/date-formatter.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  const savedLang = localStorage.getItem("lang") || "id";
+  await setLocale(savedLang);
   const mainContent = document.getElementById("mainContent");
 
   const updateActiveNav = (id) => {
@@ -36,8 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
         formattedDate: formatDate(s.createdAt),
       }));
     } catch (error) {
-      mainContent.innerHTML =
-        '<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Gagal Memuat Data!</h4><p>Terjadi kesalahan saat mengambil data cerita. Pastikan koneksi internet stabil.</p></div>';
+      mainContent.innerHTML = `<div class="alert alert-danger" role="alert"><h4 class="alert-heading">${msg("Gagal Memuat Data!")}</h4><p>${msg("Terjadi kesalahan saat mengambil data cerita. Pastikan koneksi internet stabil.")}</p></div>`;
     }
   };
 
