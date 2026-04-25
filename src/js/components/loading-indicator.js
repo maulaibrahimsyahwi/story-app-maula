@@ -1,34 +1,33 @@
-import { LitElement, html, css } from "lit";
+import { LitElement, html } from "lit";
+import { msg, updateWhenLocaleChanges } from "@lit/localize";
 
 class LoadingIndicator extends LitElement {
-  static styles = css`
-    .spinner-container {
-      display: flex;
-      justify-content: center;
-      padding: 3rem;
-    }
-    .loader {
-      width: 48px;
-      height: 48px;
-      border: 5px solid #2b5cff;
-      border-bottom-color: transparent;
-      border-radius: 50%;
-      animation: rotation 1s linear infinite;
-    }
-    @keyframes rotation {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-  `;
+  constructor() {
+    super();
+    updateWhenLocaleChanges(this);
+  }
+
+  createRenderRoot() {
+    return this;
+  }
 
   render() {
-    return html`<div class="spinner-container">
-      <div class="loader"></div>
-    </div>`;
+    return html`
+      <div
+        class="d-flex flex-column justify-content-center align-items-center"
+        style="min-height: 50vh;"
+      >
+        <div
+          class="spinner-border text-primary"
+          role="status"
+          style="width: 3rem; height: 3rem;"
+        >
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-3 text-muted fw-semibold">${msg("Memuat data...")}</p>
+      </div>
+    `;
   }
 }
+
 customElements.define("loading-indicator", LoadingIndicator);
